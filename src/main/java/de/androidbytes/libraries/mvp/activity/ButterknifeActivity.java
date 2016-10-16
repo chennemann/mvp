@@ -20,21 +20,25 @@ public abstract class ButterknifeActivity extends AppCompatActivity {
 		setContentView(getLayoutResourceId());
 	}
 
+	@LayoutRes
 	protected abstract int getLayoutResourceId();
 
 	@Override
+	@CallSuper
 	public void setContentView(@LayoutRes final int layoutResID) {
 		super.setContentView(layoutResID);
 		bindViews();
 	}
 
 	@Override
+	@CallSuper
 	public void setContentView(final View view) {
 		super.setContentView(view);
 		bindViews();
 	}
 
 	@Override
+	@CallSuper
 	public void setContentView(final View view, final ViewGroup.LayoutParams params) {
 		super.setContentView(view, params);
 		bindViews();

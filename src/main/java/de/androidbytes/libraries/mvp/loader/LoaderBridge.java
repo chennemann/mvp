@@ -2,6 +2,7 @@ package de.androidbytes.libraries.mvp.loader;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -40,10 +41,12 @@ public class LoaderBridge<PRESENTER extends Presenter<?>> {
 		this.loaderManager = manager;
 	}
 
+	@CallSuper
 	public void setDebug(boolean debug) {
 		this.debug = debug;
 	}
 
+	@CallSuper
 	public void retrievePresenter(
 			@Nullable Bundle savedInstanceState,
 			@NonNull final TypeFactory<PRESENTER> factory,
@@ -79,6 +82,7 @@ public class LoaderBridge<PRESENTER extends Presenter<?>> {
 
 				@Override
 				public void onLoaderReset(Loader<PRESENTER> loader) {
+					// TODO Handle Loader Reset
 					// empty not used implementation
 				}
 			});

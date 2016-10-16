@@ -2,6 +2,7 @@ package de.androidbytes.libraries.mvp.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
@@ -22,6 +23,7 @@ public abstract class PresenterFragment<VIEW, PRESENTER extends Presenter<? supe
     private PRESENTER presenter;
 
     @Override
+    @CallSuper
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -32,11 +34,13 @@ public abstract class PresenterFragment<VIEW, PRESENTER extends Presenter<? supe
     public abstract TypeFactory<PRESENTER> getPresenterFactory();
 
     @Override
+    @CallSuper
     public void onPresenterProvided(PRESENTER presenter) {
         this.presenter = presenter;
     }
 
     @Override
+    @CallSuper
     public void onStart() {
         super.onStart();
         presenter.bindView(getViewLayer());
@@ -45,18 +49,21 @@ public abstract class PresenterFragment<VIEW, PRESENTER extends Presenter<? supe
     public abstract VIEW getViewLayer();
 
     @Override
+    @CallSuper
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         presenter.onSaveInstanceState(outState);
     }
 
     @Override
+    @CallSuper
     public void onStop() {
         super.onStop();
         presenter.unbindView();
     }
 
     @Override
+    @CallSuper
     public void onDestroy() {
         super.onDestroy();
         Activity activity = getActivity();

@@ -85,6 +85,7 @@ public abstract class BasePresenter<VIEW> implements Presenter<VIEW> {
      * @param view Object representing MVP view layer
      */
     @Override
+    @CallSuper
     public void bindView(VIEW view) {
         this.view = view;
         onViewBound();
@@ -97,6 +98,7 @@ public abstract class BasePresenter<VIEW> implements Presenter<VIEW> {
      * It will be called no later than Activity/Fragment onStop() method call.
      */
     @Override
+    @CallSuper
     public void unbindView() {
         this.view = null;
         onViewUnbound();
@@ -105,6 +107,7 @@ public abstract class BasePresenter<VIEW> implements Presenter<VIEW> {
     protected void onViewUnbound(){};
 
     @Override
+    @CallSuper
     public VIEW getView() {
         return view;
     }
