@@ -73,6 +73,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     compile 'com.jakewharton:butterknife:8.0.1'
+    compile 'com.google.dagger:dagger:2.7'
     compile 'com.android.support:appcompat-v7:24.2.1'
 }
 

@@ -3,11 +3,12 @@ package de.androidbytes.libraries.mvp;
 import android.app.Application;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import de.androidbytes.libraries.mvp.di.BaseApplicationComponent;
 
 
-public abstract class ComponentApplication<C> extends Application {
+public abstract class ComponentApplication<COMPONENT extends BaseApplicationComponent> extends Application {
 
-	private C applicationComponent;
+	private COMPONENT applicationComponent;
 
 	@Override
 	@CallSuper
@@ -20,11 +21,11 @@ public abstract class ComponentApplication<C> extends Application {
 		applicationComponent = onCreateComponent();
 	}
 
-	public final C getApplicationComponent() {
+	public final COMPONENT getApplicationComponent() {
 		return applicationComponent;
 	}
 
 	@NonNull
-	protected abstract C onCreateComponent();
+	protected abstract COMPONENT onCreateComponent();
 
 }

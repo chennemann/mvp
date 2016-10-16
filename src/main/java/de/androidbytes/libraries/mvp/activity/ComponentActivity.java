@@ -21,7 +21,7 @@ public abstract class ComponentActivity<COMPONENT> extends ButterknifeActivity {
 		final Application application = getApplication();
 		if (application instanceof ComponentApplication) {
 			injectionComponent = onCreateComponent();
-			onComponentCreated();
+			((ComponentApplication) application).getApplicationComponent().inject(this);
 		} else {
 			throw new RuntimeException(application.getClass().getName() + " must extend from " + ComponentApplication.class.getSimpleName() + " to work with children of " + ComponentActivity.class.getSimpleName());
 		}
@@ -32,5 +32,4 @@ public abstract class ComponentActivity<COMPONENT> extends ButterknifeActivity {
 	}
 
 	protected abstract COMPONENT onCreateComponent();
-	protected abstract void onComponentCreated();
 }
