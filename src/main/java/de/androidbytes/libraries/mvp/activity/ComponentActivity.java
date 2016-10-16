@@ -1,8 +1,9 @@
 package de.androidbytes.libraries.mvp.activity;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
-
+import de.androidbytes.libraries.mvp.ComponentApplication;
 
 
 public abstract class ComponentActivity<COMPONENT> extends ButterknifeActivity {
@@ -17,14 +18,19 @@ public abstract class ComponentActivity<COMPONENT> extends ButterknifeActivity {
 	}
 
 	private void handleComponentInjection() {
-		injectionComponent = onCreateComponent();
-		onComponentCreated();
+		final Application application = getApplication();
+		if (application instanceof ComponentApplication) {
+			injectionComponent = onCreateComponent(((ComponentApplication) application));
+			onComponentCreated();
+		} else {
+			throw new RuntimeException(application.getClass().getName() + " must extend from " + ComponentApplication.class.getSimpleName() + " to work with children of " + ComponentActivity.class.getSimpleName());
+		}
 	}
 
 	protected final COMPONENT getComponent() {
 		return injectionComponent;
 	}
 
-	protected abstract COMPONENT onCreateComponent();
+	protected abstract COMPONENT onCreateComponent(ComponentApplication application);
 	protected abstract void onComponentCreated();
 }
