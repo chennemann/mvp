@@ -1,12 +1,12 @@
-package de.androidbytes.libraries.mvp.activity;
+package de.chennemann.libraries.mvp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
-import de.androidbytes.libraries.mvp.common.TypeFactory;
-import de.androidbytes.libraries.mvp.loader.LoaderBridge;
-import de.androidbytes.libraries.mvp.presenter.OnPresenterProvidedListener;
-import de.androidbytes.libraries.mvp.presenter.Presenter;
+import de.chennemann.libraries.mvp.common.TypeFactory;
+import de.chennemann.libraries.mvp.loader.LoaderBridge;
+import de.chennemann.libraries.mvp.presenter.OnPresenterProvidedListener;
+import de.chennemann.libraries.mvp.presenter.Presenter;
 
 /**
  * Base MVP presenter retain with loader activity (AppCompatActivity)
@@ -30,7 +30,7 @@ public abstract class PresenterActivity<COMPONENT, VIEW, PRESENTER extends Prese
                 .retrievePresenter(savedInstanceState, getPresenterFactory(), this);
     }
 
-    public abstract TypeFactory<PRESENTER> getPresenterFactory();
+    protected abstract TypeFactory<PRESENTER> getPresenterFactory();
 
     @Override
     @CallSuper

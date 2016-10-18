@@ -1,7 +1,5 @@
-apply from: 'version.gradle'
-
-group = "de.androidbytes.libraries.mvp"
-version = libraryVersion
+group = "de.chennemann.libraries"
+version = "0.5.0"
 
 buildscript {
     repositories {
@@ -14,24 +12,27 @@ buildscript {
     }
 }
 
-
+repositories {
+    jcenter()
+}
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
 
 ext {
     bintrayRepo = 'maven'
     bintrayName = 'mvp'
 
-    publishedGroupId = 'de.androidbytes.libraries.mvp'
-    libraryName = 'mvp'
-    artifact = 'mvp'
+    publishedGroupId = group
+    libraryName = rootProject.name
+    artifact = rootProject.name
 
     libraryDescription = 'mvp-library for android'
 
     siteUrl = 'https://github.com/chennemann/mvp'
     gitUrl = 'https://github.com/chennemann/mvp.git'
 
-    libraryVersion = libraryVersion
+    libraryVersion = version
 
     developerId = 'chennemann'
     developerName = 'Christoph Hennemann'
@@ -50,9 +51,7 @@ android {
         minSdkVersion 18
         targetSdkVersion 24
         versionCode 1
-        versionName libraryVersion
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionName version
     }
 
     buildTypes {
@@ -65,9 +64,7 @@ android {
     compileOptions.encoding = 'utf-8'
 }
 
-repositories {
-    jcenter()
-}
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

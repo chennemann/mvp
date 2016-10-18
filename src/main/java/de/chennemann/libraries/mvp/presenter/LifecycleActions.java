@@ -1,4 +1,4 @@
-package de.androidbytes.libraries.mvp.presenter;
+package de.chennemann.libraries.mvp.presenter;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

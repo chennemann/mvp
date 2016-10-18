@@ -1,4 +1,4 @@
-package de.androidbytes.libraries.mvp.common;
+package de.chennemann.libraries.mvp.common;
 
 public interface Factory<TYPE> {
 

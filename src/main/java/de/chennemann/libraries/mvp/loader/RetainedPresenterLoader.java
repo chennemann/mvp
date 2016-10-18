@@ -1,12 +1,11 @@
-package de.androidbytes.libraries.mvp.loader;
+package de.chennemann.libraries.mvp.loader;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import de.androidbytes.libraries.mvp.common.TypeFactory;
-import de.androidbytes.libraries.mvp.presenter.LifecycleActions;
+import de.chennemann.libraries.mvp.presenter.LifecycleActions;
+import de.chennemann.libraries.mvp.common.TypeFactory;
 
 /**
  * Loader class responsible to retain presenter object

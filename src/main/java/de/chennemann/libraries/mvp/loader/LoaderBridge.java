@@ -1,4 +1,4 @@
-package de.androidbytes.libraries.mvp.loader;
+package de.chennemann.libraries.mvp.loader;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,11 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.Log;
-
-import de.androidbytes.libraries.mvp.common.TypeFactory;
-import de.androidbytes.libraries.mvp.presenter.OnPresenterProvidedListener;
-import de.androidbytes.libraries.mvp.presenter.Presenter;
-
+import de.chennemann.libraries.mvp.presenter.OnPresenterProvidedListener;
+import de.chennemann.libraries.mvp.presenter.Presenter;
+import de.chennemann.libraries.mvp.common.TypeFactory;
 
 
 /**

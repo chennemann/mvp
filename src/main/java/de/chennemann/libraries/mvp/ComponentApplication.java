@@ -1,12 +1,11 @@
-package de.androidbytes.libraries.mvp;
+package de.chennemann.libraries.mvp;
 
 import android.app.Application;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
-import de.androidbytes.libraries.mvp.di.BaseApplicationComponent;
 
 
-public abstract class ComponentApplication<COMPONENT extends BaseApplicationComponent> extends Application {
+public abstract class ComponentApplication<COMPONENT> extends Application {
 
 	private COMPONENT applicationComponent;
 

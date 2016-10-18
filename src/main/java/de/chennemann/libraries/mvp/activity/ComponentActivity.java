@@ -1,9 +1,9 @@
-package de.androidbytes.libraries.mvp.activity;
+package de.chennemann.libraries.mvp.activity;
 
 import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
-import de.androidbytes.libraries.mvp.ComponentApplication;
+import de.chennemann.libraries.mvp.ComponentApplication;
 
 
 public abstract class ComponentActivity<COMPONENT> extends ButterknifeActivity {
@@ -21,7 +21,7 @@ public abstract class ComponentActivity<COMPONENT> extends ButterknifeActivity {
 		final Application application = getApplication();
 		if (application instanceof ComponentApplication) {
 			injectionComponent = onCreateComponent();
-			((ComponentApplication) application).getApplicationComponent().inject(this);
+			onComponentCreated();
 		} else {
 			throw new RuntimeException(application.getClass().getName() + " must extend from " + ComponentApplication.class.getSimpleName() + " to work with children of " + ComponentActivity.class.getSimpleName());
 		}
@@ -32,4 +32,5 @@ public abstract class ComponentActivity<COMPONENT> extends ButterknifeActivity {
 	}
 
 	protected abstract COMPONENT onCreateComponent();
+	protected abstract void onComponentCreated();
 }

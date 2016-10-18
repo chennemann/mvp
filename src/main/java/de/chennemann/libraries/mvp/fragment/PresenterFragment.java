@@ -1,15 +1,14 @@
-package de.androidbytes.libraries.mvp.fragment;
+package de.chennemann.libraries.mvp.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
-import de.androidbytes.libraries.mvp.common.TypeFactory;
-import de.androidbytes.libraries.mvp.loader.LoaderBridge;
-import de.androidbytes.libraries.mvp.presenter.OnPresenterProvidedListener;
-import de.androidbytes.libraries.mvp.presenter.Presenter;
+import de.chennemann.libraries.mvp.loader.LoaderBridge;
+import de.chennemann.libraries.mvp.presenter.OnPresenterProvidedListener;
+import de.chennemann.libraries.mvp.presenter.Presenter;
+import de.chennemann.libraries.mvp.common.TypeFactory;
 
 /**
  * Base MVP presenter retain with loader fragment (android.support.v4.app.Fragment)

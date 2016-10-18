@@ -1,10 +1,9 @@
-package de.androidbytes.libraries.mvp.loader;
+package de.chennemann.libraries.mvp.loader;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.Loader;
-
-import de.androidbytes.libraries.mvp.common.TypeFactory;
+import de.chennemann.libraries.mvp.common.TypeFactory;
 
 /**
  * Loader class responsible for retaining specific object between orientation changes

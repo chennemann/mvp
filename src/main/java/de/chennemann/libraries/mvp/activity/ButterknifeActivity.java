@@ -1,4 +1,4 @@
-package de.androidbytes.libraries.mvp.activity;
+package de.chennemann.libraries.mvp.activity;
 
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
