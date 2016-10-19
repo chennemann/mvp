@@ -1,0 +1,193 @@
+def MAJOR_VERSION_KEY = 'VERSION_MAJOR'
+def MINOR_VERSION_KEY = 'VERSION_MINOR'
+def PATCH_VERSION_KEY = 'VERSION_PATCH'
+def BUILD_VERSION_KEY = 'VERSION_BUILD'
+
+def Properties versionPropertiesCache
+
+def loadVersionProperties = {
+    if (versionPropertiesCache != null) {
+        return versionPropertiesCache
+    } else {
+        if (versionPropertiesFile.canRead()) {
+            def Properties versionProperties = new Properties()
+            versionProperties.load(new FileInputStream(versionPropertiesFile))
+            return versionPropertiesCache = versionProperties
+        } else {
+            throw new GradleException("Could not read from version.properties!")
+        }
+    }
+}
+
+def saveVersionProperties = {
+    Properties versionProperties ->
+        if (versionPropertiesFile.canWrite()) {
+            versionProperties.store(versionPropertiesFile.newWriter(), null)
+        } else {
+            throw new GradleException("Could not write to version.properties!")
+        }
+}
+
+def getValueOfKey = {
+    String versionKey, Properties versionProperties -> versionProperties[versionKey]
+}
+
+def resetKey = {
+    String versionKey ->
+        Properties versionProperties = loadVersionProperties()
+        versionProperties[versionKey] = "0"
+        saveVersionProperties(versionProperties)
+}
+
+def incrementKey = {
+    String versionKey ->
+        Properties versionProperties = loadVersionProperties()
+        versionProperties[versionKey] = (versionProperties[versionKey].toInteger() + 1).toString()
+        saveVersionProperties(versionProperties)
+}
+
+def incrementVersion = {
+    String versionKey ->
+
+        incrementKey(versionKey)
+
+        //noinspection GroovyFallthrough --> Intended to minimize reset code
+        switch (versionKey) {
+            case MAJOR_VERSION_KEY:
+                resetKey(MINOR_VERSION_KEY)
+            case MINOR_VERSION_KEY:
+                resetKey(PATCH_VERSION_KEY)
+        }
+}
+
+def aggregateVersionCode = {
+    Properties versionProperties = loadVersionProperties()
+    def versionCode = getValueOfKey(BUILD_VERSION_KEY, versionProperties).toInteger()
+    return versionCode
+}
+
+def aggregateSemanticVersionName = {
+    Properties versionProperties = loadVersionProperties()
+
+    def majorVersion = getValueOfKey(MAJOR_VERSION_KEY, versionProperties)
+    def minorVersion = getValueOfKey(MINOR_VERSION_KEY, versionProperties)
+    def patchVersion = getValueOfKey(PATCH_VERSION_KEY, versionProperties)
+
+    return majorVersion + "." + minorVersion + "." + patchVersion
+}
+
+def aggregateVersionName = {
+    boolean includeBuildVersion ->
+        def versionName = "v" + aggregateSemanticVersionName()
+        if (includeBuildVersion) {
+            Properties versionProperties = loadVersionProperties()
+            def buildVersion = getValueOfKey(BUILD_VERSION_KEY, versionProperties)
+            versionName += ("-" + buildVersion)
+        }
+        return versionName
+}
+
+def performGitCommand = {
+    String command ->
+        try {
+            def os = System.getProperty("os.name").toLowerCase()
+            def revision = new ByteArrayOutputStream()
+            if (!os.contains("windows")) {
+                exec {
+                    executable "/bin/sh"
+                    args "-c", command
+                    standardOutput = revision;
+                }
+            } else {
+                exec {
+                    executable "cmd"
+                    args "/c", command
+                    standardOutput = revision;
+                }
+                revision = revision as String
+                revision = revision.trim()
+            };
+        } catch (exception) {
+            println(
+                    "Error during Execution. Is the 'cmd' command line available?\n" +
+                            ">\tNested Exception: " + exception.message
+            )
+        }
+}
+
+def commitAndTagNewVersion = {
+    String versionKey, String oldVersionName ->
+
+        String newVersionName = aggregateVersionName(false)
+        println("Perform Version Upgrade: " + oldVersionName + " --> " + newVersionName)
+
+
+        String commitMessage = ""
+        String tagMessage = ""
+
+        switch (versionKey) {
+            case MAJOR_VERSION_KEY:
+                commitMessage = "version: Major Release " + oldVersionName + " --> " + newVersionName
+                tagMessage = "Major Release Version: " + newVersionName
+                break
+            case MINOR_VERSION_KEY:
+                commitMessage = "version: Minor Release " + oldVersionName + " --> " + newVersionName
+                tagMessage = "Minor Release Version: " + newVersionName
+                break
+            case PATCH_VERSION_KEY:
+                commitMessage = "version: Patch Release " + oldVersionName + " --> " + newVersionName
+                tagMessage = "Patch Version: " + newVersionName
+                break
+        }
+
+        String command =
+                'git reset &&' +
+                        'git add *version.properties && ' +
+                        'git commit -m "' + commitMessage + '" && ' +
+                        'git tag -a ' + newVersionName + ' -m "' + tagMessage + '"'
+
+        performGitCommand(command)
+}
+
+def performVersionUpgrade = {
+    String versionKey ->
+        String oldVersionName = aggregateVersionName(false)
+        incrementVersion(versionKey)
+        commitAndTagNewVersion(versionKey, oldVersionName)
+}
+
+def VERSIONING_TASKS_GROUP = 'Versioning'
+
+task incrementMajor << {
+    performVersionUpgrade(MAJOR_VERSION_KEY)
+}
+tasks.incrementMajor.group = VERSIONING_TASKS_GROUP
+
+task incrementMinor << {
+    performVersionUpgrade(MINOR_VERSION_KEY)
+}
+tasks.incrementMinor.group = VERSIONING_TASKS_GROUP
+
+task incrementPatch << {
+    performVersionUpgrade(PATCH_VERSION_KEY)
+}
+tasks.incrementPatch.group = VERSIONING_TASKS_GROUP
+
+task incrementBuild << {
+    incrementKey(BUILD_VERSION_KEY)
+}
+tasks.incrementBuild.group = VERSIONING_TASKS_GROUP
+
+ext {
+    getVersionCode = {
+        aggregateVersionCode()
+    }
+
+    getVersionName = {
+        aggregateVersionName(true)
+    }
+
+    getSemanticVersionName = {
+        aggregateSemanticVersionName()
+    }
+}
