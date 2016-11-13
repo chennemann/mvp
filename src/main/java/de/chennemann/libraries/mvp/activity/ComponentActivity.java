@@ -3,6 +3,7 @@ package de.chennemann.libraries.mvp.activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.v7.app.AppCompatActivity;
 import de.chennemann.libraries.mvp.ComponentApplication;
 import de.chennemann.libraries.mvp.common.ComponentHolder;
 
@@ -36,6 +37,6 @@ public abstract class ComponentActivity<COMPONENT extends ComponentActivity.Acti
 	}
 
 	public interface ActivityComponent {
-		void inject(ComponentActivity componentActivity);
+		void inject(AppCompatActivity activity);
 	}
 }

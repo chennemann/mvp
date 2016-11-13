@@ -29,7 +29,7 @@ public abstract class ComponentApplication<COMPONENT extends ComponentApplicatio
 	}
 
 	public interface ApplicationComponent {
-		void inject(ComponentApplication componentApplication);
+		void inject(Application application);
 	}
 
 }
