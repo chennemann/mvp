@@ -24,7 +24,7 @@ public abstract class ComponentApplication<COMPONENT extends ComponentApplicatio
 		onComponentCreated();
 	}
 
-	public final COMPONENT getApplicationComponent() {
+	public final COMPONENT getComponent() {
 		return applicationComponent;
 	}
 

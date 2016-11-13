@@ -31,7 +31,7 @@ public abstract class ComponentActivity<COMPONENT extends ComponentActivity.Acti
 		}
 	}
 
-	protected final COMPONENT getComponent() {
+	public final COMPONENT getComponent() {
 		return injectionComponent;
 	}
 

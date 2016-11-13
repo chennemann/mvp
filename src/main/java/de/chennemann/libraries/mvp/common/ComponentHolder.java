@@ -14,5 +14,6 @@ public interface ComponentHolder<COMPONENT> {
 	@NonNull
 	COMPONENT onCreateComponent();
 	void onComponentCreated();
+	COMPONENT getComponent();
 
 }
