@@ -15,7 +15,7 @@ import de.chennemann.libraries.mvp.presenter.Presenter;
  * @param <VIEW> Type of view
  * @param <PRESENTER> Type of presenter
  */
-public abstract class PresenterActivity<COMPONENT, VIEW, PRESENTER extends Presenter<VIEW>>
+public abstract class PresenterActivity<COMPONENT extends ComponentActivity.ActivityComponent, VIEW, PRESENTER extends Presenter<VIEW>>
         extends ComponentActivity<COMPONENT>
         implements OnPresenterProvidedListener<PRESENTER> {
 

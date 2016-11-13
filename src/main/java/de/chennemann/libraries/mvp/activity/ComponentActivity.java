@@ -4,9 +4,13 @@ import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import de.chennemann.libraries.mvp.ComponentApplication;
+import de.chennemann.libraries.mvp.common.ComponentHolder;
 
 
-public abstract class ComponentActivity<COMPONENT> extends ButterknifeActivity {
+
+public abstract class ComponentActivity<COMPONENT extends ComponentActivity.ActivityComponent>
+		extends ButterknifeActivity
+		implements ComponentHolder<COMPONENT> {
 
 	private COMPONENT injectionComponent;
 
@@ -31,6 +35,7 @@ public abstract class ComponentActivity<COMPONENT> extends ButterknifeActivity {
 		return injectionComponent;
 	}
 
-	protected abstract COMPONENT onCreateComponent();
-	protected abstract void onComponentCreated();
+	public interface ActivityComponent {
+		void inject(ComponentActivity componentActivity);
+	}
 }

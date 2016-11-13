@@ -2,10 +2,13 @@ package de.chennemann.libraries.mvp;
 
 import android.app.Application;
 import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
+import de.chennemann.libraries.mvp.common.ComponentHolder;
 
 
-public abstract class ComponentApplication<COMPONENT> extends Application {
+
+public abstract class ComponentApplication<COMPONENT extends ComponentApplication.ApplicationComponent>
+		extends Application
+		implements ComponentHolder<COMPONENT> {
 
 	private COMPONENT applicationComponent;
 
@@ -18,13 +21,15 @@ public abstract class ComponentApplication<COMPONENT> extends Application {
 
 	private void handleComponentInjection() {
 		applicationComponent = onCreateComponent();
+		onComponentCreated();
 	}
 
 	public final COMPONENT getApplicationComponent() {
 		return applicationComponent;
 	}
 
-	@NonNull
-	protected abstract COMPONENT onCreateComponent();
+	public interface ApplicationComponent {
+		void inject(ComponentApplication componentApplication);
+	}
 
 }
